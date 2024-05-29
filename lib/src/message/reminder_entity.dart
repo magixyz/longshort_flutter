@@ -9,7 +9,7 @@ class ReminderEntity extends Entity{
   String title;
   String content;
 
-  ReminderEntity(super.uuid,super.created_date,super.updated_date,this.title,this.content );
+  ReminderEntity({super.uuid,super.created_date,super.updated_date,required this.title,required this.content });
 
   factory ReminderEntity.fromJson(Map<String, dynamic> json) => _$ReminderEntityFromJson(json);
   Map<String, dynamic> toJson() => _$ReminderEntityToJson(this);

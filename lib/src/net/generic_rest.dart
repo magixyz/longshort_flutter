@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:cookie_jar/cookie_jar.dart';
@@ -9,7 +10,7 @@ import 'item_mapper.dart';
 import '../data/item.dart';
 import '../data/entity.dart';
 
-
+final cookie = CookieManager(CookieJar());
 
 class GenericRest<T>{
 
@@ -18,43 +19,45 @@ class GenericRest<T>{
   final dio = Dio();
 
   GenericRest( this.baseUrl){
-    dio.interceptors.add(CookieManager(CookieJar()));
+
+
+    dio.interceptors.add(cookie);
     dio.interceptors.add(DioCacheInterceptor(options:CacheOptions(
-      // A default store is required for interceptor.
+// A default store is required for interceptor.
       store: MemCacheStore(),
-      // Default.
+// Default.
       policy: CachePolicy.request,
-      // Returns a cached response on error but for statuses 401 & 403.
-      // Also allows to return a cached response on network errors (e.g. offline usage).
-      // Defaults to [null].
+// Returns a cached response on error but for statuses 401 & 403.
+// Also allows to return a cached response on network errors (e.g. offline usage).
+// Defaults to [null].
       hitCacheOnErrorExcept: [401, 403],
-      // Overrides any HTTP directive to delete entry past this duration.
-      // Useful only when origin server has no cache config or custom behaviour is desired.
-      // Defaults to [null].
+// Overrides any HTTP directive to delete entry past this duration.
+// Useful only when origin server has no cache config or custom behaviour is desired.
+// Defaults to [null].
       maxStale: const Duration(days: 7),
-      // Default. Allows 3 cache sets and ease cleanup.
+// Default. Allows 3 cache sets and ease cleanup.
       priority: CachePriority.normal,
-      // Default. Body and headers encryption with your own algorithm.
+// Default. Body and headers encryption with your own algorithm.
       cipher: null,
-      // Default. Key builder to retrieve requests.
+// Default. Key builder to retrieve requests.
       keyBuilder: CacheOptions.defaultCacheKeyBuilder,
-      // Default. Allows to cache POST requests.
-      // Overriding [keyBuilder] is strongly recommended when [true].
+// Default. Allows to cache POST requests.
+// Overriding [keyBuilder] is strongly recommended when [true].
       allowPostMethod: false,
     )
     ));
-
   }
 
 
   Future<T?> restGenericLoadByPath<T>(String entity, String path,T Function(dynamic j) constructor,{
-    String version='v1'
+    String version='v1',
+    Map<String,dynamic>? params
   }) async{
 
     var url = '$baseUrl/$version/$entity/$path';
 
     print(url);
-    var response = await dio.get(url);
+    var response = await dio.get(url,queryParameters: params);
 
 
     if ( response.statusCode != 200){
@@ -65,7 +68,7 @@ class GenericRest<T>{
 
     }
 
-    print(response.data);
+    print('response: ' +  jsonEncode(response.data));
 
 
     return ItemMapper.parseItem(response.data, constructor);
@@ -150,7 +153,7 @@ class GenericRest<T>{
     String version='v1'
   }) async{
 
-    var url = '$baseUrl/$version/$entity-list-by-foreign/$foreign/$uuid';
+    var url = '$baseUrl/$version/$entity/list-by-foreign/$foreign/$uuid';
 
 
     // var url = Uri(scheme: Global.SERVICE_SCHEME,host: Global.SERVICE_HOST,port: Global.SERVICE_PORT,path: '/rest/generic/${entity}-list', queryParameters: condition);

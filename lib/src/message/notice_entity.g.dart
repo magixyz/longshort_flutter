@@ -7,11 +7,11 @@ part of 'notice_entity.dart';
 // **************************************************************************
 
 NoticeEntity _$NoticeEntityFromJson(Map<String, dynamic> json) => NoticeEntity(
-      json['uuid'] as String,
-      json['created_date'] as String,
-      json['updated_date'] as String,
-      json['title'] as String,
-      json['content'] as String,
+      uuid: json['uuid'] as String?,
+      created_date: json['created_date'] as String?,
+      updated_date: json['updated_date'] as String?,
+      title: json['title'] as String,
+      content: json['content'] as String,
     );
 
 Map<String, dynamic> _$NoticeEntityToJson(NoticeEntity instance) =>

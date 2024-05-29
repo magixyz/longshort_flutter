@@ -49,7 +49,7 @@ class ItemMapper{
     Map<String,T> ret = {};
 
     for (var item in list){
-      ret[item.uuid] = item;
+      ret[item.uuid!] = item;
     }
 
     return ret;

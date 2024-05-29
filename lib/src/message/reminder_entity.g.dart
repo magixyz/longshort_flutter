@@ -8,11 +8,11 @@ part of 'reminder_entity.dart';
 
 ReminderEntity _$ReminderEntityFromJson(Map<String, dynamic> json) =>
     ReminderEntity(
-      json['uuid'] as String,
-      json['created_date'] as String,
-      json['updated_date'] as String,
-      json['title'] as String,
-      json['content'] as String,
+      uuid: json['uuid'] as String?,
+      created_date: json['created_date'] as String?,
+      updated_date: json['updated_date'] as String?,
+      title: json['title'] as String,
+      content: json['content'] as String,
     );
 
 Map<String, dynamic> _$ReminderEntityToJson(ReminderEntity instance) =>

@@ -9,7 +9,7 @@ class NoticeEntity extends Entity{
   String title;
   String content;
 
-  NoticeEntity(super.uuid,super.created_date,super.updated_date,this.title,this.content );
+  NoticeEntity({super.uuid,super.created_date,super.updated_date,required this.title,required this.content });
 
   factory NoticeEntity.fromJson(Map<String, dynamic> json) => _$NoticeEntityFromJson(json);
   Map<String, dynamic> toJson() => _$NoticeEntityToJson(this);
