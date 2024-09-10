@@ -1,7 +1,7 @@
 name: longshort_flutter
 description: "Longshort framework flutter package."
 version: 0.0.1
-homepage:
+homepage: "https://github.com/magixyz/longshort_flutter"
 
 environment:
   sdk: '>=3.3.3 <4.0.0'
@@ -26,10 +26,9 @@ dependencies:
 
   flutter_html: ^3.0.0-beta.2
 #  flutter_html: ^2.2.1
+  flutter_webview_plugin: ^0.4.0
 
-
-  flutter_cuw_l10n:
-    path: ../../LONGSHORT/flutter_cuw_l10n
+  flutter_cuw_l10n: ^0.1.0
 
 dev_dependencies:
   flutter_test:

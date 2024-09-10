@@ -3,9 +3,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:ZecMobility/utils/ItemMapper.dart';
 import 'package:longshort_flutter/longshort_flutter.dart';
 import 'package:path/path.dart';
+
+import '../utils/item_mapper.dart';
 
 class LocalFileManager{
 
@@ -94,6 +95,14 @@ class LocalFileManager{
 
   Future writeMap<T extends Item>(String filename,Map<String,T> map) async{
     var j = ItemMapper.dumpItemMap(map);
+
+    String content = jsonEncode(j);
+
+    await writeFile(filename, content);
+  }
+
+  Future writeList<T extends Item>(String filename,List<T> list) async{
+    var j = ItemMapper.dumpItems(list);
 
     String content = jsonEncode(j);
 
